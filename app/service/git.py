@@ -1,12 +1,15 @@
-import httpx
+from ..utils.request_helper import RequestHelper
 
 
 class Git:
 
-    async def getRepositories(self, repositorieName: str, from_local: bool):
-        url = ''
+    async def get_repository_by_name(self, repositorieName: str):
+        endpoint = "users/" + repositorieName + "/repos"
+        return await RequestHelper.getRequest(endpoint)
 
-        async with httpx.AsyncClient() as client:
-            resp: httpx.Response = await client.get(url)
+    async def get_user_repos(username: str,from_local: bool):
+        if not from_local:
+            endpoint = "users/" + username + "/" + "repos"
+            return await RequestHelper.getRequest(endpoint)
 
 
