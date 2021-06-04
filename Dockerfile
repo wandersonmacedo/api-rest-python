@@ -1,6 +1,6 @@
 FROM python:3.8
 
-RUN pip install fastapi uvicorn python-dotenv httpx psycopg2
+RUN pip install fastapi uvicorn python-dotenv httpx psycopg2 alembic
 
 EXPOSE 80
 
