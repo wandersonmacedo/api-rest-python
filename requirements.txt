@@ -2,3 +2,5 @@ fastapi
 uvicorn
 python-dotenv
 httpx
+psycopg2
+alembic

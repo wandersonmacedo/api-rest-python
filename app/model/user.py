@@ -1,5 +1,8 @@
-
+from ..repository.user import User
 
 class GitUser:
-    pass
+
+    def getUser(self):
+        pass
+
 
