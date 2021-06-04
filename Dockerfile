@@ -1,9 +1,9 @@
-FROM python:3.7
+FROM python:alpine
 
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn python-dotenv httpx
 
 EXPOSE 80
 
-COPY ./app /app
+COPY ./ .
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

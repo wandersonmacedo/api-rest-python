@@ -1,19 +1,22 @@
 version: '3'
 services:
   web:
-    image: python:3.8
     build:
-      context: .
-      dockerfile: Dockerfile
-    command: uvicorn app.main:app --host 0.0.0.0 --port 80
-    volumes:
-      - .:/app
+      args:
+        user: bank
+        uid: 1000
+      context: ./
+      dockerfile: ./Dockerfile
+    image: rest-app
+    container_name: api-rest-app
+    restart: unless-stopped
     ports:
-      - "8000:8000"
+    - "80:80"
+    working_dir: /var/www/app
+    volumes:
+      - ./:/var/www/app
+  postgres:
+    image: postgres:9.6.2-alpine
     environment:
-      DATABASE_URL: postgres://todoapp@postgres/todos
-#  postgres:
-#    image: postgres:9.6.2-alpine
-#    environment:
-#      POSTGRES_USER: todoapp
-#      POSTGRES_DB: todos.
+      POSTGRES_USER: todoapp
+      POSTGRES_DB: todos.
