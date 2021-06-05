@@ -2,19 +2,27 @@ import psycopg2
 import os
 from dotenv import load_dotenv, find_dotenv
 
+load_dotenv()
 
-class Database:
+
+class Database(object):
 
     def __init__(self):
         try:
+            connect = psycopg2.connect("dbname='" + os.getenv("POSTGRES_DB") + "' user='" + os.getenv("POSTGRES_USER") +
+                                       "' host='" + os.getenv("POSTGRES_HOST") + "' password='" + os.getenv("POSTGRES_PASSWORD") +
+                                       "' port='" + os.getenv("POSTGRES_PORT") + "'")
+            connect.autocommit = True
+            self.__connect = connect
+            self.__query = connect.cursor()
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
 
-            self.conection = psycopg2.connect(
-                host=os.getenv("POSTGRES_HOST"),
-                database=os.getenv("POSTGRES_DB"),
-                user=os.getenv("POSTGRES_USER"),
-                password=os.getenv("POSTGRES_PASSWORD")
-            )
-            self.cursor = self.conection.cursor()
-        except:
+    @property
+    def connect(self):
+        return self.__connect
 
-            print("ERROR TRYING TO CONNECT THE DATABASE")
+    @property
+    def query(self):
+        return self.__query
+
