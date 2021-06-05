@@ -11,18 +11,28 @@ services:
     container_name: api-rest-app
     restart: always
     ports:
-    - "80:80"
-    working_dir: /var/www/app
+      - "80:80"
+    working_dir: /var/www/
     volumes:
-      - ./:/var/www/app
+      - ./:/var/www/
+    networks:
+      - capitalys
+
   postgres:
     image: library/postgres:9.6-alpine
+    container_name: postgres-alpine
+    restart: always
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - "./data/db:/var/lib/postgresql/data"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=123456
     # open port so host machine can access
     ports:
-     - "5432:5432"
+      - 5432:5432
+    networks:
+      - capitalys
+
+networks:
+  capitalys:
