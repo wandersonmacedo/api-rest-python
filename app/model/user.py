@@ -1,8 +1,11 @@
-from ..repository.user import User
 
-class GitUser:
+class User:
 
-    def getUser(self):
-        pass
+    def __init__(self, username: str):
+        self.__username = username
+
+    @property
+    def username(self):
+        return self.__username
 
 
