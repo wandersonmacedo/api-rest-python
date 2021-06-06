@@ -16,6 +16,8 @@ class Database(object):
             self.__connect = connect
             self.__query = connect.cursor()
         except (Exception, psycopg2.DatabaseError) as error:
+            self.__connect = None
+            self.__query = None
             print(error)
 
     @property

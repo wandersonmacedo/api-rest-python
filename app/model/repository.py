@@ -2,7 +2,7 @@
 
 class Repository(object):
 
-    def __init__(self, repo, user):
+    def __init__(self, repo, user_id):
         self.__name = repo["name"]
         self.__url = repo["url"]
         self.__access_type = repo["private"]
@@ -11,7 +11,7 @@ class Repository(object):
         self.__size = repo["size"]
         self.__stars = repo["stargazers_count"]
         self.__watchers = repo["watchers"]
-        self.__user_id = user[0]
+        self.__user_id = user_id
 
     @property
     def name(self):

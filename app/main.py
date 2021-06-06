@@ -1,18 +1,18 @@
 from typing import Optional
 
-from .service.git import Git
+from .service.repository import Repository as RepositoryService
 from fastapi import FastAPI
 
 app = FastAPI()
 
 
-@app.get("/repositories/{username}")
+@app.get("/repositories/username/{username}")
 async def get_repositories_by_username(username: str, from_local: Optional[bool] = False):
-    git = Git()
-    return await git.get_user_repos(username, from_local)
+    repo_service = RepositoryService()
+    return await repo_service.get_user_repos(username, from_local)
 
 
-@app.get("/repositories/{repository_name}")
+@app.get("/repositories/repository_name/{repository_name}")
 async def get_repository_by_name(repository_name: str, save_data: Optional[bool] = False):
-    git = Git()
-    return await git.get_repository_by_name(repository_name, save_data)
+    repo_service = RepositoryService()
+    return await repo_service.get_repository_by_name(repository_name, save_data)
