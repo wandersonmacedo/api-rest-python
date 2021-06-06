@@ -22,7 +22,7 @@ def upgrade():
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('name', sa.String(100), nullable=False, unique=True),
         sa.Column('url', sa.String(200), nullable=True),
-        sa.Column('access_type', sa.Boolean, nullable=True),
+        sa.Column('access_type', sa.String, nullable=True),
         sa.Column('size', sa.String(50), nullable=True),
         sa.Column('stars', sa.String(100), nullable=True),
         sa.Column('watchers', sa.Integer, nullable=True),

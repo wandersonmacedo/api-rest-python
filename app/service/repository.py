@@ -1,5 +1,6 @@
 from ..utils.request_helper import RequestHelper
 from ..model.repository import Repository as RepositoryModel
+from ..model.user import User as UserModel
 from ..repository.user import User as UserRepository
 from ..repository.repository import Repository as RepoRepository
 from ..service.user import User as UserService
@@ -23,14 +24,13 @@ class Repository:
             return False
 
         username = get_resp[0]
-
         endpoint = "repos/" + username + "/" + repositorie_name
         get_repo = await RequestHelper.get_request(endpoint)
 
         if not get_repo:
-            return False
+            return []
 
-        return self.process_repository_json(get_repo)
+        return self.process_repository_json(get_repo, save_data)
 
     async def get_user_repos(self, username: str, from_local: bool = False):
 
@@ -49,11 +49,18 @@ class Repository:
 
     def find_from_local(self, username):
         repos = []
-        self.user = self.user_service.find_or_create(username)
         repository_repo = RepoRepository()
+        user_repo = UserRepository()
+        user = user_repo.get_by_username(username)
+        if not user:
+            return False
+
+        self.user = UserModel(user)
         repos_from_db = repository_repo.get_repository_by_userid(self.user)
+
         if not repos_from_db:
             return repos
+
         for repository in repos_from_db:
             repos.append({"name": repository[1]})
 
@@ -89,9 +96,13 @@ class Repository:
         return self.json_parse_repository(repository_model)
 
     def json_parse(self, user, resp):
+        if user == False or resp == False:
+            return False
         dump_json = JsonPrint(self.user, resp)
         return json.dumps(vars(dump_json))
 
     def json_parse_repository(self, resp):
+        if not resp:
+            return False
         dump_json = JsonPrintRepository(resp)
         return json.dumps(vars(dump_json))

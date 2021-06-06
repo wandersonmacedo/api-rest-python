@@ -14,7 +14,8 @@ class RequestHelper:
         print(full_url)
         async with httpx.AsyncClient() as client:
             resp: httpx.Response = await client.get(full_url, headers=RequestHelper.get_headers())
-            resp.raise_for_status()
+            if resp.status_code != 200:
+                return None
             return resp.json()
 
     def get_headers():
