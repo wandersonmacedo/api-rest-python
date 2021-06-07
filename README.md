@@ -5,6 +5,7 @@
  - Padrão dominante: service repository
  - Paradigma: OOP
  - As variaves de ambiente estão no arquivo .env
+ - Será necessário adicionar uma credencial Git com permissionamento de leitura de repos e users no .env
 
 
 ## Instruções 
