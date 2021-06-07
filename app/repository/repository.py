@@ -26,6 +26,7 @@ class Repository(Database):
             return super().connect.commit()
         except Exception as error:
             print(error)
+            return []
 
     def get_repositories_by_user_name(self, user: UserModel):
         super().query.execute("SELECT name FROM repository WHERE user_id = %s", ([user.id]))
@@ -43,14 +44,15 @@ class Repository(Database):
         try:
             super().query.execute(
                 "UPDATE repository SET url = %s,  access_type = %s,  size = %s,  stars = %s, "
-                " watchers = %s, created_at = %s, updated_at = %s WHERE name = %s",
+                " watchers = %s, created_at = %s, updated_at = %s WHERE name = %s AND user_id = %s",
                 (
                     [
                         repository.url, repository.access_type, repository.size, repository.stars,
-                        repository.watchers, repository.created_at, repository.updated_at, repository.name
+                        repository.watchers, repository.created_at, repository.updated_at, repository.name, repository.user_id
                     ]
                 )
             )
             return super().connect.commit()
         except Exception as error:
             print(error)
+            return []
