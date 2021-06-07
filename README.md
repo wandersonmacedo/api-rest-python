@@ -11,8 +11,8 @@
 1. Git pull na url https://github.com/wandersonmacedo/api-rest-python.git
 
 2. Rodar o docker-compose up --build
-    2. rodar docker exec -it app-rest-api bash
-    2. rodar o comando alembic upgrade head
+     - rodar: "docker exec -it app-rest-api bash"
+     - rodar: "alembic upgrade head"
 
 3. Acessar o endereço http://127.0.0.1/docs para ver os endpoints
 
