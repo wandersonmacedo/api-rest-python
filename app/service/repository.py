@@ -16,7 +16,7 @@ class Repository:
         self.user_repos = None
         self.user_service = UserService()
 
-    async def get_repository_by_name(self, repositorie_name: str, save_data: bool):
+    async def get_repository_by_name(self, repositorie_name: str, save_data: bool = False):
         # if not save_data:
         repository_repo = RepoRepository()
         get_resp = repository_repo.get_repository_by_name(repositorie_name)
@@ -40,7 +40,7 @@ class Repository:
             if not resp_json:
                 return []
 
-            self.process_json(resp_json, username)
+            self.process_user_json(resp_json, username)
             return self.json_parse(self.user, resp_json)
 
         resp = self.find_from_local(username)
@@ -66,7 +66,7 @@ class Repository:
 
         return repos
 
-    def process_json(self, resp_json, username):
+    def process_user_json(self, resp_json, username):
 
         if not resp_json:
             return None
@@ -96,9 +96,9 @@ class Repository:
         return self.json_parse_repository(repository_model)
 
     def json_parse(self, user, resp):
-        if user == False or resp == False:
+        if user is False or resp is False:
             return False
-        dump_json = JsonPrint(self.user, resp)
+        dump_json = JsonPrint(user, resp)
         return json.dumps(vars(dump_json))
 
     def json_parse_repository(self, resp):
